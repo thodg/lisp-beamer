@@ -1,0 +1,279 @@
+\documentclass[8pt]{beamer}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title{Rails on Lisp}
+\author{Thomas de Grivel <thoxdg@gmail.com>}
+\institute{http://kmx.io}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Intro}
+
+\begin{frame}
+  \frametitle{Common Lisp}
+  Common Lisp is the programmable programming language.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Common Lisp}
+  Standardisé en 1994 par l'ANSI \\
+  \url{http://www.lispworks.com/documentation/HyperSpec/Front/}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Common Lisp}
+  De nombreux compilateurs respectant le standard ANSI existent :
+  \begin{itemize}
+  \item SBCL (open-source, x86, amd64, Windows, Linux, OSX, *BSD)
+  \item ABCL (open-source, jvm)
+  \item Clozure CL (open-source, x86, amd64, Windows, Linux, OSX, FreeBSD)
+  \item ECL (open-source, compiles to C)
+  \item LispWorks (proprietary, x86, amd64, Windows, Linux, OSX, FreeBSD)
+  \item Allegro CL (proprietary, x86, amd64, sparc, Windows, Linux, OSX, FreeBSD)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Common Lisp}
+  Lisp essays by Paul Graham \\
+  \url{http://www.paulgraham.com/lisp.html}
+\end{frame}
+
+\section{Setup}
+
+\begin{frame}[fragile]
+  \frametitle{Installer SBCL}
+  Ubuntu :
+\begin{verbatim}
+  sudo apt-get install sbcl
+\end{verbatim}
+  MacOS X :
+\begin{verbatim}
+  brew install sbcl
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Installer repo}
+\begin{verbatim}
+mkdir -p ~/common-lisp/thodg
+cd ~/common-lisp/thodg
+git clone https://github.com/thodg/repo.git
+cd ~/common-lisp
+ln -s thodg/repo/repo.manifest
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Configurer SBCL}
+  Éditer \tt{\textasciitilde/.sbclrc}
+\begin{verbatim}
+  ;; ASDF
+  (require :asdf)
+
+  ;; repo
+  (load "~/common-lisp/thodg/repo/repo")
+  (repo:boot)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lancer SBCL}
+\begin{verbatim}
+$ sbcl
+This is SBCL 1.5.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+
+* _
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Installer Slime}
+\begin{verbatim}
+* (repo:install :slime)
+
+$ /usr/bin/git -C /home/dx/common-lisp/slime clone https://github.com/slime/slime.git
+Cloning into 'slime'...
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Configurer emacs}
+  Éditer \tt{\textasciitilde/.emacs}
+\begin{verbatim}
+  ;; Common Lisp
+  (add-to-list 'load-path "~/common-lisp/slime/slime/")
+  (require 'slime-autoloads)
+  (add-to-list 'slime-contribs 'slime-fancy)
+  (setq inferior-lisp-program
+        "sbcl")
+  (setq slime-net-coding-system
+        'utf-8-unix)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lancer emacs et slime}
+\begin{verbatim}
+$ emacs
+
+M-x slime
+
+CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\section{Common Lisp}
+
+\begin{frame}[fragile]
+  \frametitle{La REPL}
+  REPL : {\tt read}, {\tt eval}, {\tt print loop}
+\begin{verbatim}
+  (loop
+    ;; setup REPL vars
+    ;; handle errors, interactive debugger
+    (print
+      (eval
+        (read)))
+    (force-output)) ;; flush output buffers
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Les symboles}
+  Un symbole est plus rapide à comparer qu'une chaîne de caractères
+  (comparaison de pointeurs).
+  Pour récupérer un symbole à travers {\tt eval} il faut le quoter en le préfixant d'une apostrophe.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> 'hello-world
+  
+  HELLO WORLD
+  CL-USER> (quote hello-world)     ; equivalent sans syntaxe
+  
+  HELLO WORLD
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Les symboles}
+  Si on ne quote pas le symbole on tombe dans le debugger interactif.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> hello-world
+  
+  The variable HELLO-WORLD is unbound.
+     [Condition of type UNBOUND-VARIABLE]
+  
+  Restarts:
+   0: [CONTINUE] Retry using HELLO-WORLD.
+   1: [USE-VALUE] Use specified value.
+   2: [STORE-VALUE] Set specified value and use it.
+   3: [RETRY] Retry SLIME REPL evaluation request.
+   4: [*ABORT] Return to SLIME's top level.
+   5: [ABORT] abort thread (#<THREAD "repl-thread" RUNNING {1003B91BC3}>)
+  
+  Backtrace:
+    0: (SB-INT:SIMPLE-EVAL-IN-LEXENV HELLO-WORLD #<NULL-LEXENV>)
+    1: (EVAL HELLO-WORLD)
+   --more--
+  
+  4
+  ; Evaluation aborted on #<UNBOUND-VARIABLE HELLO-WORLD {1004AF3523}>.
+  CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Les fonctions}
+  Pour définir une fonction on utilise {\tt defun}.
+  Si le premier élément d'une liste (entre parenthèses) est une fonction ou un symbole nommant une fonction alors c'est un appel de fonction.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (defun hello-world ()
+             (format t "Hello world !"))
+  HELLO-WORLD
+  CL-USER> (hello-world)
+  Hello world !
+  NIL
+  CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lambda}
+  Une fonction anonyme est introduite par {\tt lambda}. On peut affecter une fonction anonyme à un symbole, reproduisant l'effet de {\tt defun}.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (setf (symbol-function 'hello-world)
+                 (lambda ()
+                   (format t "Hello world !")))
+  
+  CL-USER> (hello-world)
+  Hello world !
+  NIL
+  CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Les fonctions d'ordre supérieur}
+  Une fonction est une valeur comme une autre et peut être passée en paramètre d'une autre fonction. On appelle ces fonctions les fonctions d'ordre supérieur.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (mapcar (lambda (x) (* x x)) '(1 2 3 4 5))
+  (1 4 9 16 25)
+  CL-USER> (reduce #'+ '(1 2 3 4 5))
+  15
+  CL-USER> (reduce (function +) '(1 2 3 4 5))
+  15
+  CL-USER> (reduce '+ '(1 2 3 4 5))
+  15
+  CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Les macros}
+  Les paramètres d'une macro ne sont pas évalués. Cela permet de faire des DSL et de la meta-programmation.
+  Une macro génère du code qui est à son tour évalué.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (defmacro hello (arg)
+             `(format nil "Hello ~A !"
+                (string-capitalize ',arg)))
+  HELLO
+  CL-USER> (hello world)
+  "Hello World !"
+  CL-USER> _
+\end{verbatim}
+\end{frame}
+
+\end{document}
