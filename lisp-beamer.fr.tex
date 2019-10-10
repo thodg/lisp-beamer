@@ -1,22 +1,13 @@
 \documentclass[8pt]{beamer}
 
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{upquote}
 
 \usetheme{Warsaw}
 
 \AtBeginSection[]{
-  \begin{frame}
-  \vfill
-  \centering
-  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-    \usebeamerfont{title}\insertsectionhead\par%
-  \end{beamercolorbox}
-  \vfill
-  \end{frame}
-}
-
-\AtBeginSubsection[]{
   \begin{frame}
   \vfill
   \centering
@@ -48,13 +39,13 @@
 
 \begin{frame}
   \frametitle{Common Lisp}
-  Standardised in 1994 by ANSI \\
+  Standardisé en 1994 par l'ANSI \\
   \url{http://www.lispworks.com/documentation/HyperSpec/Front/}
 \end{frame}
 
 \begin{frame}
   \frametitle{Common Lisp}
-  Several compilers implementing the ANSI standard :
+  De nombreux compilateurs respectant le standard ANSI existent :
   \begin{itemize}
   \item SBCL (open-source, x86, amd64, Windows, Linux, OSX, *BSD)
   \item ABCL (open-source, jvm)
@@ -74,7 +65,7 @@
 \subsection{Installation}
 
 \begin{frame}[fragile]
-  \frametitle{Install SBCL}
+  \frametitle{Installer SBCL}
   Ubuntu :
 \begin{verbatim}
   sudo apt-get install sbcl
@@ -86,7 +77,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Install repo}
+  \frametitle{Installer repo}
 \begin{verbatim}
 mkdir -p ~/common-lisp/thodg
 cd ~/common-lisp/thodg
@@ -97,8 +88,8 @@ ln -s thodg/repo/repo.manifest
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Configure SBCL}
-  Edit \tt{\textasciitilde/.sbclrc}
+  \frametitle{Configurer SBCL}
+  Éditer \tt{\textasciitilde/.sbclrc}
 \begin{verbatim}
   ;; ASDF
   (require :asdf)
@@ -110,7 +101,7 @@ ln -s thodg/repo/repo.manifest
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Launch SBCL}
+  \frametitle{Lancer SBCL}
 \begin{verbatim}
 $ sbcl
 This is SBCL 1.5.3, an implementation of ANSI Common Lisp.
@@ -126,7 +117,7 @@ distribution for more information.
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Install Slime}
+  \frametitle{Installer Slime}
 \begin{verbatim}
 * (repo:install :slime)
 
@@ -136,8 +127,8 @@ Cloning into 'slime'...
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Configure emacs}
-  Edit \tt{\textasciitilde/.emacs}
+  \frametitle{Configurer emacs}
+  Éditer \tt{\textasciitilde/.emacs}
 \begin{verbatim}
   ;; Common Lisp
   (add-to-list 'load-path "~/common-lisp/slime/slime/")
@@ -150,10 +141,10 @@ Cloning into 'slime'...
 \end{verbatim}
 \end{frame}
 
-\subsection{Demo}
+\subsection{Démo}
 
 \begin{frame}[fragile]
-  \frametitle{Launch emacs and slime}
+  \frametitle{Lancer emacs et slime}
 \begin{verbatim}
 $ emacs
 
@@ -164,7 +155,7 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{The REPL}
+  \frametitle{La REPL}
   REPL : {\tt read}, {\tt eval}, {\tt print loop}
 \begin{verbatim}
   (loop
@@ -178,10 +169,10 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Symbols}
-  A symbol compares faster than a string
-  (pointers comparison).
-  To get a symbol through {\tt eval} we have to quote it.
+  \frametitle{Les symboles}
+  Un symbole est plus rapide à comparer qu'une chaîne de caractères
+  (comparaison de pointeurs).
+  Pour récupérer un symbole à travers {\tt eval} il faut le quoter en le préfixant d'une apostrophe.
 \begin{verbatim}
   ;; SLIME
   CL-USER> 'hello-world
@@ -194,8 +185,8 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Symbols}
-  If the symbol is not quoted then we end up in the interactive debugger :
+  \frametitle{Les symboles}
+  Si on ne quote pas le symbole on tombe dans le debugger interactif.
 \begin{verbatim}
   ;; SLIME
   CL-USER> hello-world
@@ -223,9 +214,9 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Functions}
-  {\tt defun} defines a function.
-  If the first element of a list (between parentheses) is a function or a symbol naming a function then the list is treated as a function call.
+  \frametitle{Les fonctions}
+  Pour définir une fonction on utilise {\tt defun}.
+  Si le premier élément d'une liste (entre parenthèses) est une fonction ou un symbole nommant une fonction alors c'est un appel de fonction.
 \begin{verbatim}
   ;; SLIME
   CL-USER> (defun hello-world ()
@@ -240,7 +231,7 @@ CL-USER> _
 
 \begin{frame}[fragile]
   \frametitle{Lambda}
-  {\tt lambda} introduces an anonymous function. We can affect an anonymous function to a symbol, not unlike {\tt defun}.
+  Une fonction anonyme est introduite par {\tt lambda}. On peut affecter une fonction anonyme à un symbole, reproduisant l'effet de {\tt defun}.
 \begin{verbatim}
   ;; SLIME
   CL-USER> (setf (symbol-function 'hello-world)
@@ -255,17 +246,17 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Higher order functions}
-  A function is a value like others and can be passed to another function. We call these functions higher order.
+  \frametitle{Les fonctions d'ordre supérieur}
+  Une fonction est une valeur comme une autre et peut être passée en paramètre d'une autre fonction. On appelle ces fonctions les fonctions d'ordre supérieur.
 \begin{verbatim}
   ;; SLIME
   CL-USER> (mapcar (lambda (x) (* x x)) '(1 2 3 4 5))
   (1 4 9 16 25)
   CL-USER> (reduce #'+ '(1 2 3 4 5))
   15
-  CL-USER> (reduce (function +) '(1 2 3 4 5))    ; equivalent to above
+  CL-USER> (reduce (function +) '(1 2 3 4 5))
   15
-  CL-USER> (reduce '+ '(1 2 3 4 5))    ; not equivalent will resolve function at run-time
+  CL-USER> (reduce '+ '(1 2 3 4 5))
   15
   CL-USER> _
 \end{verbatim}
@@ -325,6 +316,17 @@ Cloning into 'rol-template' ...
 Cloning into 'rol-uri' ...
 
 $ ls -l ~/common-lisp/RailsOnLisp/rol
+
+$ _
+\end{verbatim}
+\end{frame}
+
+\subsection{Demo}
+
+\begin{frame}[fragile]
+  \frametitle{Créer un nouveau projet}
+\begin{verbatim}
+$ rol new test
 
 $ _
 \end{verbatim}
