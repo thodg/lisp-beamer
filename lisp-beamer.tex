@@ -10,7 +10,9 @@
   \vfill
   \centering
   \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-    \usebeamerfont{title}\insertsectionhead\par%
+    \usebeamerfont{title}
+    \insertsectionhead\par%
+    \vspace{2em}
   \end{beamercolorbox}
   \vfill
   \end{frame}
@@ -21,14 +23,17 @@
   \vfill
   \centering
   \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-    \usebeamerfont{title}\insertsectionhead\par%
+    \usebeamerfont{title}
+    \insertsectionhead\par%
+    \vspace{1em}
+    \insertsubsectionhead\par%
   \end{beamercolorbox}
   \vfill
   \end{frame}
 }
 
 \title{RailsOnLisp}
-\author{Thomas de Grivel <thoxdg@gmail.com>}
+\author{Thomas de Grivel {\tt thoxdg@gmail.com}}
 \institute{http://kmx.io}
 \date{\today}
 
@@ -55,12 +60,13 @@
   \vspace{1em}
   Common Lisp Hyperspec \\
   \url{http://www.lispworks.com/documentation/HyperSpec/Front/} \\
->>>>>>> use vspace
+  Cliki \\
+  \url{http://cliki.net}
 \end{frame}
 
 \begin{frame}
   \frametitle{Common Lisp}
-  Several compilers implementing the ANSI standard :
+  Several compilers implement the ANSI standard :
   \begin{itemize}
   \item SBCL (open-source, x86, amd64, Windows, Linux, OSX, *BSD)
   \item ABCL (open-source, jvm)
@@ -181,7 +187,7 @@ CL-USER> _
   \frametitle{Symbols}
   A symbol compares faster than a string
   (pointers comparison).
-  To get a symbol through {\tt eval} we have to quote it.
+  To get a symbol through {\tt eval} we have to quote it, with a single quote prefix.
 \begin{verbatim}
   ;; SLIME
   CL-USER> 'hello-world
@@ -296,14 +302,14 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{La quasiquote}
+  \frametitle{Quasiquotation}
   \begin{itemize}
-  \item Pour quoter entièrement : {\tt '(a b c)} ou {\tt (quote (a b c))} \\
+  \item To quote entirely : {\tt '(a b c)} or {\tt (quote (a b c))} \\
     $\Rightarrow$ {\tt (a b c)}
-  \item Pour quoter partiellement {\tt `(a b ,c)} ou {\tt (list 'a 'b c)} \\
-    $\Rightarrow$ {\tt (a b 123)} si {\tt c = 123}
+  \item To quote partially : {\tt `(a b ,c)} or {\tt (list 'a 'b c)} \\
+    $\Rightarrow$ {\tt (a b 123)} if {\tt c = 123}
   \end{itemize}
-  Backquote arrete l'evaluation et virgule la réactive localement.
+  Backquote stops evaluation and comma reactivates it locally.
 \begin{verbatim}
   ;; SLIME
   CL-USER> (let ((c 123))
@@ -316,7 +322,7 @@ CL-USER> _
 \subsection{Installation}
 
 \begin{frame}[fragile]
-  \frametitle{Cloner RailsOnLisp/rol.git}
+  \frametitle{Clone RailsOnLisp/rol.git}
 \begin{verbatim}
 $ mkdir ~/common-lisp/RailsOnLisp
 $ cd ~/common-lisp/RailsOnLisp
@@ -328,8 +334,8 @@ $ _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Configurer le PATH}
-  Éditer \tt{\textasciitilde/.profile}
+  \frametitle{Configure PATH}
+  Edit \tt{\textasciitilde/.profile}
 \begin{verbatim}
   if [ -d "$HOME/common-lisp/RailsOnLisp/rol/bin" ]; then
       PATH="$HOME/common-lisp/RailsOnLisp/rol/bin:$PATH"
@@ -338,7 +344,7 @@ $ _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Installer RailsOnLisp}
+  \frametitle{Install RailsOnLisp}
 \begin{verbatim}
 $ . ~/.profile    # sourcer .profile ou lancer un nouveau shell
 $ rol install

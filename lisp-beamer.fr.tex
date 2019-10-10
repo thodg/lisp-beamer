@@ -1,6 +1,6 @@
 \documentclass[8pt]{beamer}
 
-\usepackage[frenchb]{babel}
+\usepackage[french]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{upquote}
@@ -12,14 +12,30 @@
   \vfill
   \centering
   \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-    \usebeamerfont{title}\insertsectionhead\par%
+    \usebeamerfont{title}
+    \insertsectionhead\par%
+    \vspace{2em}
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\AtBeginSubsection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}
+    \insertsectionhead\par%
+    \vspace{1em}
+    \insertsubsectionhead\par%
   \end{beamercolorbox}
   \vfill
   \end{frame}
 }
 
 \title{RailsOnLisp}
-\author{Thomas de Grivel <thoxdg@gmail.com>}
+\author{Thomas de Grivel {\tt thoxdg@gmail.com}}
 \institute{http://kmx.io}
 \date{\today}
 
@@ -35,12 +51,19 @@
 \begin{frame}
   \frametitle{Common Lisp}
   Common Lisp is the programmable programming language.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Common Lisp}
-  Standardisé en 1994 par l'ANSI \\
-  \url{http://www.lispworks.com/documentation/HyperSpec/Front/}
+  \vspace{1em}
+  Lisp essays by Paul Graham \\
+  \url{http://www.paulgraham.com/lisp.html} \\
+  \vspace{1em}
+  Standardised in 1994 by ANSI \\
+  \vspace{1em}
+  Common Lisp the Language, 2nd Edition \\
+  \url{https://www.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html} \\
+  \vspace{1em}
+  Common Lisp Hyperspec \\
+  \url{http://www.lispworks.com/documentation/HyperSpec/Front/} \\
+  Cliki \\
+  \url{http://cliki.net}
 \end{frame}
 
 \begin{frame}
@@ -54,12 +77,6 @@
   \item LispWorks (proprietary, x86, amd64, Windows, Linux, OSX, FreeBSD)
   \item Allegro CL (proprietary, x86, amd64, sparc, Windows, Linux, OSX, FreeBSD)
   \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Common Lisp}
-  Lisp essays by Paul Graham \\
-  \url{http://www.paulgraham.com/lisp.html}
 \end{frame}
 
 \subsection{Installation}
@@ -141,7 +158,7 @@ Cloning into 'slime'...
 \end{verbatim}
 \end{frame}
 
-\subsection{Démo}
+\subsection{Demo}
 
 \begin{frame}[fragile]
   \frametitle{Lancer emacs et slime}
@@ -182,6 +199,8 @@ CL-USER> _
   
   HELLO WORLD
 \end{verbatim}
+  \vspace{1em}
+  \url{http://www.gigamonkeys.com/book/programming-in-the-large-packages-and-symbols.html}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -275,6 +294,26 @@ CL-USER> _
   CL-USER> (hello world)
   "Hello World !"
   CL-USER> _
+\end{verbatim}
+  \vspace{1em}
+  On Lisp, Paul Graham \\
+  \url{http://lib.store.yahoo.net/lib/paulgraham/onlisp.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{La quasiquote}
+  \begin{itemize}
+  \item Pour quoter entièrement : {\tt '(a b c)} ou {\tt (quote (a b c))} \\
+    $\Rightarrow$ {\tt (a b c)}
+  \item Pour quoter partiellement : {\tt `(a b ,c)} ou {\tt (list 'a 'b c)} \\
+    $\Rightarrow$ {\tt (a b 123)} si {\tt c = 123}
+  \end{itemize}
+  Backquote arrete l'evaluation et virgule la réactive localement.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (let ((c 123))
+             `(a b ,c))
+  (A B 123)
 \end{verbatim}
 \end{frame}
 
