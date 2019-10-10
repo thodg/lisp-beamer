@@ -43,13 +43,19 @@
 
 \begin{frame}
   \frametitle{Common Lisp}
-  Common Lisp is the programmable programming language.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Common Lisp}
+  Common Lisp is the programmable programming language. \\
+  \vspace{1em}
+  Lisp essays by Paul Graham \\
+  \url{http://www.paulgraham.com/lisp.html} \\
+  \vspace{1em}
   Standardised in 1994 by ANSI \\
-  \url{http://www.lispworks.com/documentation/HyperSpec/Front/}
+  \vspace{1em}
+  Common Lisp the Language, 2nd Edition \\
+  \url{https://www.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html} \\
+  \vspace{1em}
+  Common Lisp Hyperspec \\
+  \url{http://www.lispworks.com/documentation/HyperSpec/Front/} \\
+>>>>>>> use vspace
 \end{frame}
 
 \begin{frame}
@@ -63,12 +69,6 @@
   \item LispWorks (proprietary, x86, amd64, Windows, Linux, OSX, FreeBSD)
   \item Allegro CL (proprietary, x86, amd64, sparc, Windows, Linux, OSX, FreeBSD)
   \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Common Lisp}
-  Lisp essays by Paul Graham \\
-  \url{http://www.paulgraham.com/lisp.html}
 \end{frame}
 
 \subsection{Installation}
@@ -191,6 +191,8 @@ CL-USER> _
   
   HELLO WORLD
 \end{verbatim}
+  \vspace{1em}
+  \url{http://www.gigamonkeys.com/book/programming-in-the-large-packages-and-symbols.html}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -273,8 +275,11 @@ CL-USER> _
 
 \begin{frame}[fragile]
   \frametitle{Les macros}
-  Les paramètres d'une macro ne sont pas évalués. Cela permet de faire des DSL et de la meta-programmation.
-  Une macro génère du code qui est à son tour évalué.
+  \begin{itemize}
+    \item paramètres non évalués $\Rightarrow$ DSL et meta-programmation
+    \item génère du code qui est à son tour évalué
+    \item backquote et virgule pour quoter partiellement
+  \end{itemize}
 \begin{verbatim}
   ;; SLIME
   CL-USER> (defmacro hello (arg)
@@ -284,6 +289,26 @@ CL-USER> _
   CL-USER> (hello world)
   "Hello World !"
   CL-USER> _
+\end{verbatim}
+  \vspace{1em}
+  On Lisp, Paul Graham \\
+  \url{http://lib.store.yahoo.net/lib/paulgraham/onlisp.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{La quasiquote}
+  \begin{itemize}
+  \item Pour quoter entièrement : {\tt '(a b c)} ou {\tt (quote (a b c))} \\
+    $\Rightarrow$ {\tt (a b c)}
+  \item Pour quoter partiellement {\tt `(a b ,c)} ou {\tt (list 'a 'b c)} \\
+    $\Rightarrow$ {\tt (a b 123)} si {\tt c = 123}
+  \end{itemize}
+  Backquote arrete l'evaluation et virgule la réactive localement.
+\begin{verbatim}
+  ;; SLIME
+  CL-USER> (let ((c 123))
+             `(a b ,c))
+  (A B 123)
 \end{verbatim}
 \end{frame}
 
