@@ -18,7 +18,7 @@
   \end{frame}
 }
 
-\title{Rails on Lisp}
+\title{RailsOnLisp}
 \author{Thomas de Grivel <thoxdg@gmail.com>}
 \institute{http://kmx.io}
 \date{\today}
@@ -276,5 +276,32 @@ CL-USER> _
   CL-USER> _
 \end{verbatim}
 \end{frame}
+
+\section{RailsOnLisp}
+
+\begin{frame}[fragile]
+  \frametitle{Installer RailsOnLisp}
+\begin{verbatim}
+$ mkdir ~/common-lisp/RailsOnLisp
+$ cd ~/common-lisp/RailsOnLisp
+$ git clone https://github.com/RailsOnLisp/rol.git
+Cloning into 'rol' ...
+
+$ sh rol/bin/rol-install
+Cloning into 'rol-assets' ...
+
+$ cd rol && ls -l
+lrwxrwxrwx 1 dx dx   13 oct.   9 17:52 assets   -> ../rol-assets
+drwxr-xr-x 2 dx dx 4096 oct.  10 10:44 bin
+lrwxrwxrwx 1 dx dx   12 oct.   9 17:52 files    -> ../rol-files
+lrwxrwxrwx 1 dx dx   10 oct.   9 17:52 log      -> ../rol-log
+lrwxrwxrwx 1 dx dx   13 oct.   9 17:52 server   -> ../rol-server
+lrwxrwxrwx 1 dx dx   15 oct.   9 17:52 template -> ../rol-template
+lrwxrwxrwx 1 dx dx   10 oct.   9 17:52 uri      -> ../rol-uri
+
+$ _
+\end{verbatim}
+\end{frame}
+
 
 \end{document}
