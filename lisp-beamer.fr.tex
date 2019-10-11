@@ -283,8 +283,11 @@ CL-USER> _
 
 \begin{frame}[fragile]
   \frametitle{Les macros}
-  Les paramètres d'une macro ne sont pas évalués. Cela permet de faire des DSL et de la meta-programmation.
-  Une macro génère du code qui est à son tour évalué.
+  \begin{itemize}
+    \item paramètres non évalués $\Rightarrow$ DSL et meta-programmation
+    \item génère du code qui est à son tour évalué
+    \item backquote et virgule pour quoter partiellement
+  \end{itemize}
 \begin{verbatim}
   ;; SLIME
   CL-USER> (defmacro hello (arg)
@@ -293,6 +296,8 @@ CL-USER> _
   HELLO
   CL-USER> (hello world)
   "Hello World !"
+  CL-USER> (hello poney)
+  "Hello Poney !"
   CL-USER> _
 \end{verbatim}
   \vspace{1em}

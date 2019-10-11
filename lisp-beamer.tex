@@ -280,11 +280,11 @@ CL-USER> _
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Les macros}
+  \frametitle{Macros}
   \begin{itemize}
-    \item paramètres non évalués $\Rightarrow$ DSL et meta-programmation
-    \item génère du code qui est à son tour évalué
-    \item backquote et virgule pour quoter partiellement
+    \item parameters are not evaluated $\Rightarrow$ DSL and meta-programming
+    \item generate code which is in turn evaluated
+    \item backquote and comma to quote only parts
   \end{itemize}
 \begin{verbatim}
   ;; SLIME
@@ -294,6 +294,8 @@ CL-USER> _
   HELLO
   CL-USER> (hello world)
   "Hello World !"
+  CL-USER> (hello pony)
+  "Hello Pony !"
   CL-USER> _
 \end{verbatim}
   \vspace{1em}
