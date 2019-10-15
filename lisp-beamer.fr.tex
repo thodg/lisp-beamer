@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{upquote}
+\usepackage{graphicx}
 
 \usetheme{Warsaw}
 
@@ -357,6 +358,7 @@ Cloning into 'rol-assets' ...
 Cloning into 'rol-files' ...
 Cloning into 'rol-log' ...
 Cloning into 'rol-server' ...
+Cloning into 'rol-skel' ...
 Cloning into 'rol-template' ...
 Cloning into 'rol-uri' ...
 
@@ -369,12 +371,68 @@ $ _
 \subsection{Demo}
 
 \begin{frame}[fragile]
-  \frametitle{Créer un nouveau projet}
+  \frametitle{rol new}
 \begin{verbatim}
 $ rol new test
+Creating test
+D .
+D ./config
+F ./config/app.lisp
+F ./config/routes.lisp
+F ./config/assets.lisp
+D ./data
+D ./lib
+L ./lib/rol -> /home/dx/common-lisp/RailsOnLisp/rol
+F ./Makefile
+D ./app
+D ./app/assets
+D ./app/assets/css
+F ./app/assets/css/app.css
+D ./app/assets/js
+F ./app/assets/js/app.js
+D ./app/views
+D ./app/views/_layouts
+F ./app/views/_layouts/main.html
+[...]
 
 $ _
 \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{make load}
+\begin{verbatim}
+$ cd test
+$ make load
+env LC_ALL=en_US.UTF-8 sbcl --disable-ldb --lose-on-corruption \
+ --dynamic-space-size 512 --noinform --end-runtime-options \
+ --eval '(declaim (optimize (debug 2) (safety 2) (speed 3) (space 1)))' \
+ --disable-debugger \
+ --load load.lisp \
+ --eval '(run)' \
+ --quit
+
+[...]
+
+INFO setup environment development
+DEBUG tags: ASSETS APP REPLY MIME FILE DIRECTORY THOT
+INFO saving facts into "data/test.facts"
+INFO starting thot at 0.0.0.0:4000
+
+INFO Thot start 0.0.0.0:4000
+INFO loading mime types from /etc/mime.types
+INFO #<FUNCTION THOT::MAIN-LOOP-THREADED>
+INFO  #<FUNCTION THOT::ACCEPTOR-LOOP-EPOLL>
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{localhost:4000}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width = 6cm]{test.jpg}
+    \label{localhost:4000}
+  \end{figure}
 \end{frame}
 
 \end{document}
