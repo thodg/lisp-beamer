@@ -211,23 +211,22 @@ CL-USER> _
 \begin{verbatim}
   ;; SLIME
   CL-USER> hello-world
-  
+
   The variable HELLO-WORLD is unbound.
      [Condition of type UNBOUND-VARIABLE]
-  
+
   Restarts:
    0: [CONTINUE] Retry using HELLO-WORLD.
    1: [USE-VALUE] Use specified value.
    2: [STORE-VALUE] Set specified value and use it.
    3: [RETRY] Retry SLIME REPL evaluation request.
    4: [*ABORT] Return to SLIME's top level.
-   5: [ABORT] abort thread (#<THREAD "repl-thread" RUNNING {1003B91BC3}>)
   
   Backtrace:
     0: (SB-INT:SIMPLE-EVAL-IN-LEXENV HELLO-WORLD #<NULL-LEXENV>)
     1: (EVAL HELLO-WORLD)
    --more--
-  
+
   4
   ; Evaluation aborted on #<UNBOUND-VARIABLE HELLO-WORLD {1004AF3523}>.
   CL-USER> _
@@ -392,7 +391,6 @@ D ./app/assets/js
 F ./app/assets/js/app.js
 D ./app/views
 D ./app/views/_layouts
-F ./app/views/_layouts/main.html
 [...]
 
 $ _
